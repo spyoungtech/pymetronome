@@ -15,7 +15,7 @@ class Meter(SimpleNamespace):
         return cls(*(int(i) for i in s.split('/')))
 
     def __iter__(self):
-        return iter([self.unit, self.beats])
+        return iter([self.beats, self.unit])
 
     def cycle(self):
         beats = [(880, 100)]
