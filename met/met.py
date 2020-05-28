@@ -26,10 +26,14 @@ class Meter(SimpleNamespace):
                 beats.append((440, 100))
             return cycle(beats)
 
+    def __str__(self):
+        return '{}/{}'.format(self.beats, self.unit)
+
 
 def bpm_to_interval(bpm: float) -> float:
     per_second = 60 / bpm
     return per_second
+
 
 class Metronome:
     def __init__(self, bpm, meter: Meter):
@@ -50,11 +54,10 @@ class Metronome:
                 winsound.Beep(*next_sound)
 
 
-
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser('met')
-    parser.add_argument('--bpm', default=120, type=int)
-    parser.add_argument('--meter', default='4/4')
+    parser.add_argument('--bpm', default=120, type=int, help="Beats per minute (default is 120)")
+    parser.add_argument('--meter', default='4/4', help='The time signature to use (default is "4/4")')
     args = parser.parse_args()
     meter = Meter.from_string(args.meter)
     met = Metronome(args.bpm, meter)
